@@ -7,13 +7,19 @@ import UploadForm from "./UploadForm";
 import ImageGrid from "./ImageGrid";
 import Modal from "./Modal";
 import Caption from "./Caption";
+import Tag from "./Tag";
 import Delete from "./DeleteBox";
 import { logOut } from "../firebase/config";
 
 const Dashboard = () => {
   const user = useContext(UserContext);
   const history = useHistory();
+  const [tag, setTag] = useState("");
+  const [searchTag, setSearchTag] = useState("");
+  const [date, setDate] = useState({ day: 0, month: 0, year: 0 });
+  const [search, setSearch] = useState([]);
   const [current, setCurrent] = useState("");
+  const [tagId, setTagId] = useState(null);
   const [selected, setSelected] = useState(null);
   const [captionId, setCaptionId] = useState(null);
   const [id, setId] = useState(null);
@@ -40,12 +46,26 @@ const Dashboard = () => {
         </div>
         <img src={Photo} alt="photography" className="background-image" />
       </div>
-      <UploadForm />
+      <UploadForm
+        setTag={setTag}
+        setSearchTag={setSearchTag}
+        setDate={setDate}
+        setSearch={setSearch}
+      />
       <ImageGrid
+        date={date}
+        setDate={setDate}
+        search={search}
+        setSearch={setSearch}
         setCurrent={setCurrent}
         setSelected={setSelected}
         setCaptionId={setCaptionId}
         setId={setId}
+        setTagId={setTagId}
+        tag={tag}
+        setTag={setTag}
+        searchTag={searchTag}
+        setSearchTag={setSearchTag}
       />
       {selected && <Modal selected={selected} setSelected={setSelected} />}
       {captionId && (
@@ -56,6 +76,7 @@ const Dashboard = () => {
         />
       )}
       {id && <Delete id={id} setId={setId} />}
+      {tagId && <Tag tagId={tagId} setTagId={setTagId} />}
     </>
   );
 };

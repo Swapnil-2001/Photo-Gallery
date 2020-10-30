@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import deleteTag from "../hooks/deleteTag";
+import Blue from "../images/blue-magnifying.png";
+import Add from "../images/addtag.png";
 import Sad from "../images/sweat.png";
 import Search from "../images/loupe.png";
 import Delete from "../images/x-button.png";
@@ -9,23 +12,62 @@ import ReactCardFlip from "react-card-flip";
 import useFirestore from "../hooks/useFirestore";
 import { motion } from "framer-motion";
 
-const ImageGrid = ({ setCurrent, setSelected, setCaptionId, setId }) => {
-  const [date, setDate] = useState({ day: 0, month: 0, year: 0 });
+const ImageGrid = ({
+  setCurrent,
+  setSelected,
+  setCaptionId,
+  setId,
+  setTagId,
+  search,
+  setSearch,
+  date,
+  setDate,
+  tag,
+  setTag,
+  searchTag,
+  setSearchTag
+}) => {
   const [message, setMessage] = useState(null);
-  const [search, setSearch] = useState([]);
   const [errors, setErrors] = useState("");
   const [flipped, setFlipped] = useState([]);
   const id = localStorage.getItem("user_id");
   let { docs } = useFirestore(id);
+  let tagList = [];
+  if (docs) {
+    for (let doc of docs) {
+      doc.tags.forEach((tag) => {
+        if (!tagList.includes(tag)) {
+          tagList.push(tag);
+        }
+      });
+    }
+  }
+  if (searchTag) {
+    let find = searchTag.toLowerCase();
+    docs = docs.filter((doc) => {
+      let res = false;
+      for (let tag of doc.tags) {
+        if (tag.toLowerCase().includes(find)) {
+          res = true;
+          break;
+        }
+      }
+      return res;
+    });
+  }
   if (search.length > 0) {
     docs = docs.filter((doc) => {
       const [day, month, year] = search;
-      const d = doc.createdAt.toDate();
-      return (
-        (d.getDate() === parseInt(day, 10) || d.getDate() === day) &&
-        d.getMonth() === month - 1 &&
-        (d.getFullYear() === year || d.getFullYear() === parseInt(year, 10))
-      );
+      if (doc.createdAt) {
+        const d = doc.createdAt.toDate();
+        return (
+          (d.getDate() === parseInt(day, 10) || d.getDate() === day) &&
+          d.getMonth() === month - 1 &&
+          (d.getFullYear() === year || d.getFullYear() === parseInt(year, 10))
+        );
+      } else {
+        return false;
+      }
     });
   }
 
@@ -71,6 +113,17 @@ const ImageGrid = ({ setCurrent, setSelected, setCaptionId, setId }) => {
     });
   }
 
+  function handleTagChange(e) {
+    const { value } = e.target;
+    setTag(value);
+  }
+
+  function handleTagSearch() {
+    if (tag) {
+      setSearchTag(tag);
+    }
+  }
+
   function handleSearch() {
     if (!isValidDate(date)) {
       setErrors("Please enter a valid date.");
@@ -84,7 +137,49 @@ const ImageGrid = ({ setCurrent, setSelected, setCaptionId, setId }) => {
 
   return (
     <>
-      <div className="search-date-heading">Search saved photos by date:</div>
+      {tagList.length > 0 && (
+        <div style={{ textAlign: "center" }}>
+          <h1 className="tags-heading">Tags</h1>
+          {tagList.map((tag, index) => (
+            <div className="heading-tags" key={index}>
+              <div className="heading-tag">{tag}</div>
+            </div>
+          ))}
+        </div>
+      )}
+      <div className="search-date-heading">Filter photos by tag:</div>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          marginBottom: "50px"
+        }}
+      >
+        <input
+          type="text"
+          name="tag"
+          onChange={handleTagChange}
+          value={tag}
+          className="input"
+        />
+        <img
+          onClick={handleTagSearch}
+          src={Blue}
+          className="search-logo"
+          alt="search"
+        />
+        <button
+          className="search-button-tag"
+          onClick={() => {
+            setTag("");
+            setSearchTag("");
+          }}
+        >
+          Clear Filter
+        </button>
+      </div>
+      <div className="search-date-heading">Search photos by date:</div>
       <div
         style={{
           display: "flex",
@@ -131,7 +226,7 @@ const ImageGrid = ({ setCurrent, setSelected, setCaptionId, setId }) => {
             setErrors("");
           }}
         >
-          All photos
+          Clear Filter
         </button>
         {errors && (
           <div style={{ color: "#ff4a4a", marginLeft: "10px" }}>{errors}</div>
@@ -214,6 +309,67 @@ const ImageGrid = ({ setCurrent, setSelected, setCaptionId, setId }) => {
                   >
                     <img src={Delete} alt="delete" className="icons" />
                     Delete
+                  </div>
+                  <div
+                    className="scrollbar"
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      overflow: "scroll"
+                    }}
+                  >
+                    {doc.tags.length < 5 && (
+                      <span
+                        style={{
+                          marginRight: "6px",
+                          cursor: "pointer"
+                        }}
+                        onClick={() => {
+                          setTagId(doc.id);
+                        }}
+                      >
+                        <img src={Add} style={{ width: "24px" }} alt="add" />
+                      </span>
+                    )}
+                    {doc.tags.length === 0 && (
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          fontSize: "0.8rem",
+                          fontWeight: "600"
+                        }}
+                      >
+                        Add tags!
+                      </div>
+                    )}
+                    {doc.tags.length > 0 && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          height: "20px"
+                        }}
+                      >
+                        {doc.tags.map((tag, index) => (
+                          <div className="tags" key={index}>
+                            <div className="tag">{tag}</div>
+                            <span
+                              onClick={() => {
+                                deleteTag(doc.id, tag);
+                              }}
+                              style={{
+                                fontSize: "0.6rem",
+                                marginLeft: "5px",
+                                cursor: "pointer"
+                              }}
+                            >
+                              x
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </>
                 <div className="caption-div">

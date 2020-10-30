@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import ProgressBar from "./ProgressBar";
 
-const UploadForm = () => {
+const UploadForm = ({ setSearch, setDate, setTag, setSearchTag }) => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
 
   const types = ["image/png", "image/jpeg"];
 
   function handleChange(e) {
+    setSearch([]);
+    setDate({ day: 0, month: 0, year: 0 });
+    setTag("");
+    setSearchTag("");
     const selected = e.target.files[0];
     if (selected && types.includes(selected.type)) {
       setFile(selected);
@@ -22,8 +26,8 @@ const UploadForm = () => {
 
   return (
     <form>
-      <label htmlFor="upload">
-        <input id="upload" type="file" onChange={handleChange} />
+      <label>
+        <input type="file" onChange={handleChange} />
         <span>+</span>
       </label>
       <div className="output">

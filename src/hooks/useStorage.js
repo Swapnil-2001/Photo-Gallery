@@ -31,7 +31,7 @@ const useStorage = (file) => {
         // now, save the URL to Firestore(database). Right now it's saved in storage
         // We want to make a document representing the image inside our DB with the image URL
         const createdAt = timestamp();
-        collectionRef.add({ url, createdAt, memory: "" });
+        collectionRef.add({ url, createdAt, memory: "", tags: [] });
       }
     );
   }, [file]);

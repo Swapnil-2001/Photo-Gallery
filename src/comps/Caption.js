@@ -30,7 +30,7 @@ const Caption = ({ current, captionId, setCaptionId }) => {
       onClick={handleClick}
     >
       <textarea
-        placeholder="Add a memory!"
+        placeholder="Add a caption / description"
         className="ui-autocomplete-input"
         autoComplete="off"
         aria-autocomplete="list"

@@ -17,6 +17,86 @@ ul {
   padding: 0;
 }
 
+form {
+  margin: 30px auto 10px;
+  text-align: center;
+}
+label input {
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+label {
+  cursor: pointer;
+  display: block;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--primary);
+  transition: all 0.5s ease;
+  border-radius: 50%;
+  margin: 10px auto;
+  line-height: 30px;
+  color: var(--primary);
+  font-weight: bold;
+  font-size: 24px;
+}
+label:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.scrollbar {
+  padding: 10px 0;
+  float: left;
+  width: 100%;
+  background: #f5f5f5;
+  overflow-y: scroll;
+  margin-bottom: 15px;
+}
+
+.scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.tags {
+  border-radius: 10px;
+  color: white;
+  background-color: #495464;
+  padding: 5px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.tag {
+  overflow: hidden;
+  max-width: 10ch;
+  font-size: 0.6rem;
+  text-overflow: ellipsis;
+}
+
+.tags-heading {
+  color: #158467;
+  font-size: 2.2rem;
+}
+
+.heading-tags {
+  border-radius: 12px;
+  color: white;
+  background-color: #707070;
+  padding: 5px 10px;
+  display: inline-block;
+  margin: 0 10px 25px 10px;
+}
+
+.heading-tag {
+  overflow: hidden;
+  max-width: 20ch;
+  font-size: 0.9rem;
+  text-overflow: ellipsis;
+}
+
 .App {
   max-width: 960px;
   margin: 0 auto;
@@ -98,6 +178,21 @@ ul {
   cursor: pointer;
   outline: none;
   background-color: #333456;
+  transition: background-color 0.5s ease;
+  font-family: "Poppins", Helvetica, Arial, sans-serif;
+  color: white;
+  font-weight: 600;
+  width: 130px;
+  height: 30px;
+  margin: 10px;
+}
+
+.search-button-tag {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background-color: #1f6f8b;
+  transition: background-color 0.5s ease;
   font-family: "Poppins", Helvetica, Arial, sans-serif;
   color: white;
   font-weight: 600;
@@ -108,6 +203,10 @@ ul {
 
 .search-button:hover {
   background-color: #595b83;
+}
+
+.search-button-tag:hover {
+  background-color: #3797a4;
 }
 
 .title h1 {
@@ -127,32 +226,6 @@ ul {
 
 /* upload form styles */
 
-form {
-  margin: 30px auto 10px;
-  text-align: center;
-}
-label input {
-  height: 0;
-  width: 0;
-  opacity: 0;
-}
-label {
-  cursor: pointer;
-  display: block;
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--primary);
-  border-radius: 50%;
-  margin: 10px auto;
-  line-height: 30px;
-  color: var(--primary);
-  font-weight: bold;
-  font-size: 24px;
-}
-label:hover {
-  background: var(--primary);
-  color: white;
-}
 .output {
   height: 60px;
   font-size: 0.8rem;
@@ -217,6 +290,7 @@ label:hover {
   position: relative;
 }
 .img-wrap img {
+  cursor: pointer;
   min-height: 100%;
   max-width: 100%;
   position: absolute;
