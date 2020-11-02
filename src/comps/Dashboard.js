@@ -45,6 +45,7 @@ const Dashboard = () => {
           </div>
         </div>
         <img src={Photo} alt="photography" className="background-image" />
+        <p style={{ color: "#5eaaa8" }}>Click to upload a photo</p>
       </div>
       <UploadForm
         setTag={setTag}
