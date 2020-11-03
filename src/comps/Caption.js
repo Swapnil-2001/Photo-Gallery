@@ -31,7 +31,6 @@ const Caption = ({ current, captionId, setCaptionId }) => {
     >
       <textarea
         placeholder="Add a caption / description"
-        className="ui-autocomplete-input"
         autoComplete="off"
         aria-autocomplete="list"
         aria-haspopup="true"

@@ -36,23 +36,27 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="title">
-        <div className="logout-div">
-          <h1>Gallery</h1>
-          <div className="logout-button" onClick={LogOut}>
-            <img src={Search} alt="google icon" className="google-logo" />
-            <span>LogOut</span>
+      <div className="dashboard-background">
+        <div className="title">
+          <div className="logout-div">
+            <h1>Gallery</h1>
+            <div className="logout-button" onClick={LogOut}>
+              <img src={Search} alt="google icon" className="google-logo" />
+              <span>LogOut</span>
+            </div>
           </div>
+          <img src={Photo} alt="photography" className="background-image" />
+          <p style={{ color: "#64958f", fontWeight: "600" }}>
+            Click to upload a photo
+          </p>
         </div>
-        <img src={Photo} alt="photography" className="background-image" />
-        <p style={{ color: "#5eaaa8" }}>Click to upload a photo</p>
+        <UploadForm
+          setTag={setTag}
+          setSearchTag={setSearchTag}
+          setDate={setDate}
+          setSearch={setSearch}
+        />
       </div>
-      <UploadForm
-        setTag={setTag}
-        setSearchTag={setSearchTag}
-        setDate={setDate}
-        setSearch={setSearch}
-      />
       <ImageGrid
         date={date}
         setDate={setDate}

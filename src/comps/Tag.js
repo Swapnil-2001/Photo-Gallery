@@ -31,7 +31,6 @@ const Tag = ({ tagId, setTagId }) => {
     >
       <textarea
         placeholder="Add a tag!"
-        className="ui-autocomplete-input"
         autoComplete="off"
         aria-autocomplete="list"
         aria-haspopup="true"

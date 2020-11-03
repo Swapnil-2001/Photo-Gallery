@@ -9,18 +9,16 @@ export default function App() {
   return (
     <UserProvider>
       <Router>
-        <div className="App">
-          <Switch>
-            <Route exact path="/">
-              <Login />
-            </Route>
-            <Route path="/dashboard">
-              <div>
-                <Dashboard />
-              </div>
-            </Route>
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path="/">
+            <Login />
+          </Route>
+          <Route path="/dashboard">
+            <div>
+              <Dashboard />
+            </div>
+          </Route>
+        </Switch>
       </Router>
     </UserProvider>
   );

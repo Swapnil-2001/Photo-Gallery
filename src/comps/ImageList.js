@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import ReactCardFlip from "react-card-flip";
 import { motion } from "framer-motion";
 import Delete from "../images/x-button.png";
@@ -90,14 +90,7 @@ function ImageList({
                   <img src={Delete} alt="delete" className="icons" />
                   Delete
                 </div>
-                <div
-                  className="scrollbar"
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    overflow: "scroll"
-                  }}
-                >
+                <div className="scrollbar">
                   {doc.tags.length < 5 && (
                     <span
                       style={{
@@ -182,7 +175,7 @@ function ImageList({
           </div>
         ))}
     </div>
-  )
+  );
 }
 
 export default ImageList;
