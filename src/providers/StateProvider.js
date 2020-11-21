@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer } from "react";
 
-// Create data layer to track the basket
+// Create data layer
 export const StateContext = createContext();
 
 // Build Provider, give it access to data layer
