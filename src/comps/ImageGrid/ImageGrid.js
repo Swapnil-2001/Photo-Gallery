@@ -62,6 +62,20 @@ const ImageGrid = ({ date, setDate, tag, setTag }) => {
     });
   }
 
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   useEffect(() => {
     if (docs.length > 0) {
       const arr = new Array(docs.length).fill(false);
@@ -264,7 +278,7 @@ const ImageGrid = ({ date, setDate, tag, setTag }) => {
           deleteTag={deleteTag}
         />
       </div>
-      <ScrollButton delayInMs="16.66" />
+      {scrollPosition > 20 && <ScrollButton delayInMs="16.66" />}
     </>
   );
 };
