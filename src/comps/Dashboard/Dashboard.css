@@ -1,0 +1,59 @@
+.dashboard-background {
+  background-color: white;
+}
+
+.title {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.title h1 {
+  color: #8db596;
+  font-size: 2rem;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.title h2,
+.title p {
+  text-align: center;
+}
+
+.title h2 {
+  margin-top: 60px;
+  font-size: 2.6rem;
+}
+
+.logout-div {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 100%;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+.logout-div > h1 {
+  flex-grow: 7;
+  margin-left: 10px;
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 10px;
+  flex-grow: 1;
+  max-height: 40px;
+}
+
+.logout-button span {
+  color: #968c83;
+  letter-spacing: 0.9px;
+  font-weight: 600;
+}
+
+.background-image {
+  width: 100%;
+  object-fit: contain;
+}

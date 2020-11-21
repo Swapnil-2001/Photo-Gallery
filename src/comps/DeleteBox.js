@@ -1,11 +1,16 @@
 import React from "react";
 import deletePic from "../hooks/deletePic";
 import { motion } from "framer-motion";
+import { useStateValue } from "../providers/StateProvider";
 
-const Delete = ({ id, setId }) => {
+const Delete = () => {
+  const [{ deleteId }, dispatch] = useStateValue();
   function handleClick(e) {
     if (e.target.classList.contains("backdrop")) {
-      setId(null);
+      dispatch({
+        type: "SET_DELETE_ID",
+        id: null
+      });
     }
   }
 
@@ -17,14 +22,25 @@ const Delete = ({ id, setId }) => {
       onClick={handleClick}
     >
       <div className="delete-text">Sure you want to delete this picture?</div>
-      <button className="cancel-button" onClick={() => setId(null)}>
+      <button
+        className="cancel-button"
+        onClick={() => {
+          dispatch({
+            type: "SET_DELETE_ID",
+            id: null
+          });
+        }}
+      >
         Cancel
       </button>
       <button
         className="delete-button"
         onClick={() => {
-          deletePic(id);
-          setId(null);
+          deletePic(deleteId);
+          dispatch({
+            type: "SET_DELETE_ID",
+            id: null
+          });
         }}
       >
         Delete

@@ -1,23 +1,16 @@
 import React from "react";
 import ReactCardFlip from "react-card-flip";
 import { motion } from "framer-motion";
-import Delete from "../images/x-button.png";
-import Caption from "../images/post-it.png";
-import Picture from "../images/picture.png";
-import Edit from "../images/pencil.png";
-import Add from "../images/addtag.png";
+import Delete from "../../images/x-button.png";
+import Caption from "../../images/post-it.png";
+import Picture from "../../images/picture.png";
+import Edit from "../../images/pencil.png";
+import Add from "../../images/addtag.png";
+import { useStateValue } from "../../providers/StateProvider";
+import "./ImageList.css";
 
-function ImageList({
-  flipped,
-  setFlipped,
-  setCurrent,
-  setCaptionId,
-  docs,
-  setId,
-  setTagId,
-  deleteTag,
-  setSelected
-}) {
+function ImageList({ flipped, setFlipped, docs, deleteTag }) {
+  const [, dispatch] = useStateValue();
   return (
     <div className="img-grid">
       {docs &&
@@ -31,7 +24,10 @@ function ImageList({
                   className="img-wrap"
                   onClick={(e) => {
                     if (e.target.classList.contains("img")) {
-                      setSelected(doc.url);
+                      dispatch({
+                        type: "SET_SELECTED_IMAGE",
+                        image: doc.url
+                      });
                     }
                   }}
                 >
@@ -53,8 +49,14 @@ function ImageList({
                 )}
                 <div
                   onClick={() => {
-                    setCurrent(doc.memory);
-                    setCaptionId(doc.id);
+                    dispatch({
+                      type: "SET_CURRENT_CAPTION",
+                      caption: doc.memory
+                    });
+                    dispatch({
+                      type: "SET_CAPTION_ID",
+                      id: doc.id
+                    });
                   }}
                   className="menu-item"
                   style={{ color: "#595b83" }}
@@ -82,7 +84,10 @@ function ImageList({
                 </div>
                 <div
                   onClick={() => {
-                    setId(doc.id);
+                    dispatch({
+                      type: "SET_DELETE_ID",
+                      id: doc.id
+                    });
                   }}
                   className="menu-item"
                   style={{ color: "#af2d2d" }}
@@ -98,7 +103,10 @@ function ImageList({
                         cursor: "pointer"
                       }}
                       onClick={() => {
-                        setTagId(doc.id);
+                        dispatch({
+                          type: "SET_TAG_ID",
+                          tagId: doc.id
+                        });
                       }}
                     >
                       <img src={Add} style={{ width: "24px" }} alt="add" />
@@ -149,8 +157,14 @@ function ImageList({
                 <div className="caption-text">{doc.memory}</div>
                 <div
                   onClick={() => {
-                    setCurrent(doc.memory);
-                    setCaptionId(doc.id);
+                    dispatch({
+                      type: "SET_CURRENT_CAPTION",
+                      caption: doc.memory
+                    });
+                    dispatch({
+                      type: "SET_CAPTION_ID",
+                      id: doc.id
+                    });
                   }}
                   className="menu-item"
                   style={{ color: "#595b83" }}

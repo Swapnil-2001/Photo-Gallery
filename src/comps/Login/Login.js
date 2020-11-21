@@ -1,11 +1,12 @@
-import React, { useContext, useEffect } from "react";
-import { signInWithGoogle, auth } from "../firebase/config";
-import { UserContext } from "../providers/UserProvider";
-import Search from "../images/search.png";
+import React, { useEffect } from "react";
+import { signInWithGoogle, auth } from "../../firebase/config";
+import { useStateValue } from "../../providers/StateProvider";
+import Search from "../../images/search.png";
 import { useHistory } from "react-router-dom";
+import "./Login.css";
 
 export default function Login() {
-  const user = useContext(UserContext);
+  const [{ user }] = useStateValue();
   const history = useHistory();
   useEffect(() => {
     if (user) {

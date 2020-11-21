@@ -1,17 +1,26 @@
 import React, { useState } from "react";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "../ProgressBar/ProgressBar";
+import { useStateValue } from "../../providers/StateProvider";
+import "./UploadForm.css";
 
-const UploadForm = ({ setSearch, setDate, setTag, setSearchTag }) => {
+const UploadForm = ({ setDate, setTag }) => {
+  const [, dispatch] = useStateValue();
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
 
   const types = ["image/png", "image/jpeg"];
 
   function handleChange(e) {
-    setSearch([]);
+    dispatch({
+      type: "SET_DATE_SEARCH",
+      date: []
+    });
+    dispatch({
+      type: "SET_TAG_SEARCH",
+      tag: ""
+    });
     setDate({ day: 0, month: 0, year: 0 });
     setTag("");
-    setSearchTag("");
     const selected = e.target.files[0];
     if (selected && types.includes(selected.type)) {
       setFile(selected);

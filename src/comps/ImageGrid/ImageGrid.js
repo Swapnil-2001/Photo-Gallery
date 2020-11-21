@@ -1,30 +1,20 @@
 import React, { useState, useEffect } from "react";
-import deleteTag from "../hooks/deleteTag";
-import ScrollButton from "../hooks/ScrollToTop";
-import Blue from "../images/blue-magnifying.png";
-import Sad from "../images/sweat.png";
-import Search from "../images/loupe.png";
-import useFirestore from "../hooks/useFirestore";
+import deleteTag from "../../hooks/deleteTag";
+import ScrollButton from "../../hooks/ScrollToTop";
+import Blue from "../../images/blue-magnifying.png";
+import Sad from "../../images/sweat.png";
+import Search from "../../images/loupe.png";
+import useFirestore from "../../hooks/useFirestore";
 import { motion } from "framer-motion";
-import isValidDate from "../utils/isValidDate";
+import isValidDate from "../../utils/isValidDate";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import ImageList from "./ImageList";
+import ImageList from "../ImageList/ImageList";
 
-const ImageGrid = ({
-  setCurrent,
-  setSelected,
-  setCaptionId,
-  setId,
-  setTagId,
-  search,
-  setSearch,
-  date,
-  setDate,
-  tag,
-  setTag,
-  searchTag,
-  setSearchTag
-}) => {
+import { useStateValue } from "../../providers/StateProvider";
+import "./ImageGrid.css";
+
+const ImageGrid = ({ date, setDate, tag, setTag }) => {
+  const [{ dateSearch, tagSearch }, dispatch] = useStateValue();
   const [copied, setCopied] = useState("");
   const [message, setMessage] = useState(null);
   const [errors, setErrors] = useState("");
@@ -41,8 +31,9 @@ const ImageGrid = ({
       });
     }
   }
-  if (searchTag) {
-    let find = searchTag.toLowerCase();
+
+  if (tagSearch) {
+    let find = tagSearch.toLowerCase();
     docs = docs.filter((doc) => {
       let res = false;
       for (let tag of doc.tags) {
@@ -54,9 +45,10 @@ const ImageGrid = ({
       return res;
     });
   }
-  if (search.length > 0) {
+
+  if (dateSearch.length > 0) {
     docs = docs.filter((doc) => {
-      const [day, month, year] = search;
+      const [day, month, year] = dateSearch;
       if (doc.createdAt) {
         const d = doc.createdAt.toDate();
         return (
@@ -76,11 +68,11 @@ const ImageGrid = ({
       setFlipped(arr);
       setMessage(null);
     } else {
-      if (search.length > 0) {
+      if (dateSearch.length > 0) {
         setMessage("No photos on that day!");
       }
     }
-  }, [docs.length, search.length]);
+  }, [docs.length, dateSearch.length]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -98,8 +90,11 @@ const ImageGrid = ({
   }
 
   function handleTagSearch() {
-    if (tag) {
-      setSearchTag(tag);
+    if (tag.length) {
+      dispatch({
+        type: "SET_TAG_SEARCH",
+        tag
+      });
     }
   }
 
@@ -110,7 +105,10 @@ const ImageGrid = ({
     } else {
       setErrors("");
       const { day, month, year } = date;
-      setSearch([day, month, year]);
+      dispatch({
+        type: "SET_DATE_SEARCH",
+        date: [day, month, year]
+      });
     }
   }
 
@@ -177,7 +175,10 @@ const ImageGrid = ({
               className="search-button-tag"
               onClick={() => {
                 setTag("");
-                setSearchTag("");
+                dispatch({
+                  type: "SET_TAG_SEARCH",
+                  tag: ""
+                });
               }}
             >
               Clear Filter
@@ -226,7 +227,10 @@ const ImageGrid = ({
               className="search-button"
               onClick={() => {
                 setDate({ day: 0, month: 0, year: 0 });
-                setSearch([]);
+                dispatch({
+                  type: "SET_DATE_SEARCH",
+                  date: []
+                });
                 setErrors("");
               }}
             >
@@ -257,12 +261,7 @@ const ImageGrid = ({
           docs={docs}
           flipped={flipped}
           setFlipped={setFlipped}
-          setCurrent={setCurrent}
-          setCaptionId={setCaptionId}
-          setId={setId}
-          setTagId={setTagId}
           deleteTag={deleteTag}
-          setSelected={setSelected}
         />
       </div>
       <ScrollButton delayInMs="16.66" />

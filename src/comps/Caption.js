@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import addCaption from "../hooks/addCaption";
 import Plus from "../images/add.png";
 import { motion } from "framer-motion";
+import { useStateValue } from "../providers/StateProvider";
 
-const Caption = ({ current, captionId, setCaptionId }) => {
-  const [input, setInput] = useState(current);
+const Caption = () => {
+  const [{ captionId, currentCaption }, dispatch] = useStateValue();
+  const [input, setInput] = useState(currentCaption);
 
   function handleClick(e) {
     if (e.target.classList.contains("backdrop")) {
-      setCaptionId(null);
+      dispatch({
+        type: "SET_CAPTION_ID",
+        id: null
+      });
     }
   }
 
@@ -19,7 +24,10 @@ const Caption = ({ current, captionId, setCaptionId }) => {
 
   function handleAdd() {
     addCaption(captionId, input);
-    setCaptionId(null);
+    dispatch({
+      type: "SET_CAPTION_ID",
+      id: null
+    });
   }
 
   return (

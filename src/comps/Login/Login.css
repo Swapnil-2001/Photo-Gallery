@@ -1,0 +1,16 @@
+.login-buttons {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-provider-button {
+  border: 1px solid #4e4e4e;
+  font-weight: 600;
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

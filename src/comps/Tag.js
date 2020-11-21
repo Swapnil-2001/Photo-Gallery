@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import addTags from "../hooks/addTags";
 import Plus from "../images/add.png";
 import { motion } from "framer-motion";
+import { useStateValue } from "../providers/StateProvider";
 
-const Tag = ({ tagId, setTagId }) => {
+const Tag = () => {
+  const [{ tagId }, dispatch] = useStateValue();
   const [input, setInput] = useState("");
 
   function handleClick(e) {
     if (e.target.classList.contains("backdrop")) {
-      setTagId(null);
+      dispatch({
+        type: "SET_TAG_ID",
+        tagId: null
+      });
     }
   }
 
@@ -18,8 +23,13 @@ const Tag = ({ tagId, setTagId }) => {
   }
 
   function handleAdd() {
-    addTags(tagId, input);
-    setTagId(null);
+    if (input.length) {
+      addTags(tagId, input);
+    }
+    dispatch({
+      type: "SET_TAG_ID",
+      tagId: null
+    });
   }
 
   return (

@@ -1,0 +1,12 @@
+.output {
+  height: 60px;
+  font-size: 0.8rem;
+}
+
+.error {
+  color: var(--error);
+}
+
+.progress {
+  margin: 10px 100px;
+}

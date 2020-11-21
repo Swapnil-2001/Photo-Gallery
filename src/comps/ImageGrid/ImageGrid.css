@@ -1,0 +1,151 @@
+.search-background {
+  padding: 20px 10px 5px 10px;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(227, 246, 245, 0.5),
+    rgba(227, 246, 245, 1)
+  );
+}
+
+.tags-heading {
+  color: #64958f;
+  font-size: 2.4rem;
+}
+
+.tags-message {
+  font-size: 0.9rem;
+  margin-bottom: 30px;
+  color: #2d6187;
+  font-weight: 600;
+}
+
+.copied-text {
+  background-color: #e8e8e8;
+  padding: 10px;
+  animation-name: myAnimation;
+  animation-duration: 3000ms;
+  animation-fill-mode: forwards;
+  color: green;
+  font-weight: 600;
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes myAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    display: none;
+    opacity: 0;
+  }
+}
+
+.heading-tags {
+  border-radius: 12px;
+  color: white;
+  background-color: #64958f;
+  padding: 5px 10px;
+  display: inline-block;
+  margin: 0 10px 25px 10px;
+  transition: all 0.5s ease;
+}
+
+.heading-tags:hover {
+  cursor: pointer;
+  background-color: #e8e8e8;
+  color: black;
+}
+
+.heading-tag {
+  overflow: hidden;
+  max-width: 20ch;
+  font-size: 0.9rem;
+  text-overflow: ellipsis;
+}
+
+.search-date-heading {
+  margin-left: 10px;
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #43658b;
+}
+
+.input {
+  font-family: "Poppins", Helvetica, Arial, sans-serif;
+  background-color: white;
+  border: 2px solid #64958f;
+  height: 30px;
+  margin: 10px;
+  outline: none;
+  border-radius: 6px;
+}
+
+::placeholder {
+  font-weight: 700;
+  color: #64958f;
+  padding-left: 8px;
+}
+
+.search-logo {
+  width: 25px;
+  margin: auto 10px;
+  cursor: pointer;
+  transition: transform 0.4s;
+}
+
+.search-logo:hover {
+  transform: scale(1.4);
+  filter: brightness(0.8);
+}
+
+.search-button-tag {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background-color: #1f6f8b;
+  transition: background-color 0.5s ease;
+  font-family: "Poppins", Helvetica, Arial, sans-serif;
+  color: white;
+  letter-spacing: 1px;
+  width: 130px;
+  height: 30px;
+  margin: 10px;
+}
+
+.search-button-tag:hover {
+  background-color: #3797a4;
+}
+
+.search-button {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background-color: #333456;
+  transition: background-color 0.5s ease;
+  font-family: "Poppins", Helvetica, Arial, sans-serif;
+  color: white;
+  letter-spacing: 1px;
+  width: 130px;
+  height: 30px;
+  margin: 10px;
+}
+
+.search-button:hover {
+  background-color: #595b83;
+}
+
+.no-photos {
+  color: #2d6187;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  font-size: 1.5rem;
+}
